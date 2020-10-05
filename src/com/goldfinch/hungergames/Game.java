@@ -2,10 +2,12 @@ package com.goldfinch.hungergames;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Game {
+public class Game extends BukkitRunnable {
 
     private Arena arena;
     private HashMap<UUID, Integer> points;
@@ -17,22 +19,11 @@ public class Game {
 
     public void start() {
         arena.setState(GameStates.LIVE);
-        arena.sendMessage(ChatColor.GOLD + "fdgdfgdfg");
-
-        for (UUID uuid : arena.getPlayers()) { points.put(uuid, 0); }
+        arena.sendMessage(ChatColor.GOLD + "game start message");
     }
 
-    public void addPoint(Player player) {
-        int p = points.get(player.getUniqueId()) + 1;
+    @Override
+    public void run() {
 
-        if (p == 5) {
-            arena.sendMessage(ChatColor.RED + "Игра завершена!");
-            arena.sendMessage(ChatColor.RED + "Победителем становится " + player.getName());
-
-            arena.reset();
-            return;
-        }
-
-        points.replace(player.getUniqueId(), p);
     }
 }

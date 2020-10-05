@@ -12,7 +12,9 @@ public class Manager {
     public Manager() {
         arenas = new ArrayList<>();
 
-        for (int i = 0; i <= (Config.getArenasAmount() + 1); i++) { arenas.add(new Arena(i)); }
+        for (int i = 0; i <= (Config.getArenasAmount() - 1); i++) {
+            arenas.add(new Arena(i));
+        }
     }
 
     public static List<Arena> getArenas() { return arenas; }
@@ -43,5 +45,9 @@ public class Manager {
         return null;
     }
 
-    public static boolean isRecruiting(int id) { return getArena(id).getState() == GameStates.RECRUITING; }
+    public static boolean isRecruiting(int id) {
+        if (getArena(id).getState() == GameStates.RECRUITING) {
+            return true;
+        } else { return false; }
+    }
 }

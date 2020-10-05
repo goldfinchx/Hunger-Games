@@ -6,7 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Countdown extends BukkitRunnable {
 
     private Arena arena;
-    public static int seconds;
+    private int seconds;
 
     public Countdown(Arena arena) {
         this.arena = arena;
@@ -14,19 +14,20 @@ public class Countdown extends BukkitRunnable {
     }
 
     public void begin() {
+        arena.setState(GameStates.COUNTDOWN);
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
     @Override
     public void run() {
-
-        if (seconds == 30 ) {
+        if (seconds == 0) {
+            cancel();
             arena.start();
             return;
         }
 
-        if (seconds == 30 || seconds >= 20) {
-            if (seconds == 29) {
+        if (seconds % 30 == 0 || seconds <= 10) {
+            if (seconds == 1) {
                 arena.sendMessage(ChatColor.GREEN + "Игра начинается! Удачи! ");
             } else {
                 arena.sendMessage(ChatColor.GREEN + "Игра начнётся через " + seconds + " секунд!");
@@ -40,6 +41,6 @@ public class Countdown extends BukkitRunnable {
             return;
         }
 
-        seconds++;
+        seconds--;
     }
 }
