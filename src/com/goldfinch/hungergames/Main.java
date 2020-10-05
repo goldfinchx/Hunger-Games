@@ -1,5 +1,6 @@
 package com.goldfinch.hungergames;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -14,7 +15,10 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Main.instance = this;
 
+        Bukkit.getPluginCommand("arena").setExecutor(new ArenaCommand());
+
         new Config(this);
+        new Manager();
     }
 
     public static Main getInstance() { return instance; }
