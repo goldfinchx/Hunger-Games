@@ -12,7 +12,7 @@ public class Manager {
     public Manager() {
         arenas = new ArrayList<>();
 
-        for (int i = 0; i <= (Config.getArenasAmount() - 1); i++) {
+        for (int i = 0; i <= (Config.getArenasAmount() + 1); i++) {
             arenas.add(new Arena(i));
         }
     }

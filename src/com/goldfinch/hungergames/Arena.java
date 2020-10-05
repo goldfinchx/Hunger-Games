@@ -1,8 +1,13 @@
 package com.goldfinch.hungergames;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +16,7 @@ import java.util.UUID;
 public class Arena {
 
     private int id;
+    public int seconds;
     private ArrayList<UUID> players;
     private Location spawn;
     private GameStates state;
@@ -63,6 +69,24 @@ public class Arena {
             reset();
 
     }
+
+    public void createGameScoreboard(Player player) {
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+
+        Objective obj = board.registerNewObjective("hungergames", "dummy");
+        obj.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Hunger Games");
+        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        Team time = board.registerNewTeam("timeteam");
+        time.addEntry(ChatColor.RED + "" + ChatColor.YELLOW);
+        time.setPrefix("Время " + ChatColor.DARK_GRAY + "» ");
+        time.setSuffix(String.valueOf(seconds));
+
+        obj.getScore(ChatColor.RED + "" + ChatColor.YELLOW).setScore(1);
+
+        player.setScoreboard(board);
+    }
+
 
     public int getID() { return id; }
     public List<UUID> getPlayers() { return players; }
