@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -37,6 +38,22 @@ public class Arena {
     public void reset() {
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).teleport(Config.getLobbySpawn());
+
+            Bukkit.getScheduler().cancelTask(seconds);
+            new BukkitRunnable() {
+                @Override
+                public void run() { removePlayer(Bukkit.getPlayer(uuid)); }
+            }.runTaskLater(Main.getInstance(), 20*10);
+
+            Bukkit.getPlayer(uuid).setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+            Bukkit.getPlayer(uuid).sendTitle(ChatColor.GREEN + "Игра завершена!", ChatColor.WHITE + "Победу одержал " +  DeathEvent.winner, 1, 5, 2);
+            Bukkit.getPlayer(uuid).sendMessage("   * * * * *");
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.GOLD + "   Игра завершена!");
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.GOLD + "   Победил: ");
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "   " + (DeathEvent.winner).toString());
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.GOLD + "   Больше всего убийств: ");
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "   " + DeathEvent.killer1name + "  " + DeathEvent.killer1kills + "убийств");
+            Bukkit.getPlayer(uuid).sendMessage("   * * * * *");
         }
 
         state = GameStates.RECRUITING;
@@ -45,7 +62,7 @@ public class Arena {
         game = new Game(this);
     }
 
-    public void sendMessage (String message) { //
+    public void sendMessage (String message) {
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).sendMessage(message);
         }
@@ -54,6 +71,7 @@ public class Arena {
     public void addPlayer (Player player) {
         players.add(player.getUniqueId());
         player.teleport(spawn);
+        Game.alivePlayers.add(player);
 
         if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); }
     }
@@ -61,6 +79,7 @@ public class Arena {
     public void removePlayer (Player player) {
         players.remove(player.getUniqueId());
         player.teleport(Config.getLobbySpawn());
+        Game.alivePlayers.remove(player);
 
         if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN))
             reset();
