@@ -80,6 +80,7 @@ public class Arena {
         players.remove(player.getUniqueId());
         player.teleport(Config.getLobbySpawn());
         Game.alivePlayers.remove(player);
+        player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN))
             reset();

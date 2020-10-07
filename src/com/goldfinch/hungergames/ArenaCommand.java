@@ -27,11 +27,16 @@ public class ArenaCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Вы покинули арену.");
                 } else { player.sendMessage(ChatColor.RED + "Вы не находитесь в игре!"); }
 
+
+
+                // проблема в джоин!!!!!!!!!!!!!!!!!!!
+
             } else if (args.length == 2 && args[0].equalsIgnoreCase("join")) {
+
                 try {
                     int id = Integer.parseInt(args[1]);
 
-                    if (id > 0 && id >= (Config.getArenasAmount()) - 1) {
+                    if (id >= 0 && id <= (Config.getArenasAmount()) - 1) {
                         if (Manager.isRecruiting(id)) {
                             Manager.getArena(id).addPlayer(player);
 

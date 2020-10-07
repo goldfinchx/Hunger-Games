@@ -7,7 +7,10 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +23,7 @@ public class DeathEvent implements Listener {
     public static String killer1name;
     public static int killer1kills;
     public static HashMap<Player, Integer> playersKills = new HashMap<>();
+
     public DeathEvent(Main main) {
         this.main = main;
     }

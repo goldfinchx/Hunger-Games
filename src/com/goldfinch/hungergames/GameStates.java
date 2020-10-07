@@ -4,6 +4,6 @@ public enum GameStates {
 
     RECRUITING,
     COUNTDOWN,
-    LIVE;
+    LIVE
 
 }
