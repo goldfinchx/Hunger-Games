@@ -46,7 +46,7 @@ public class Arena {
             }.runTaskLater(Main.getInstance(), 20*10);
 
             Bukkit.getPlayer(uuid).setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-            Bukkit.getPlayer(uuid).sendTitle(ChatColor.GREEN + "Игра завершена!", ChatColor.WHITE + "Победу одержал " +  DeathEvent.winner, 1, 5, 2);
+            Bukkit.getPlayer(uuid).sendTitle(ChatColor.GREEN + "Игра завершена!", ChatColor.WHITE + "Победу одержал " +  DeathEvent.winner, 1, 5, 10);
             Bukkit.getPlayer(uuid).sendMessage("   * * * * *");
             Bukkit.getPlayer(uuid).sendMessage(ChatColor.GOLD + "   Игра завершена!");
             Bukkit.getPlayer(uuid).sendMessage(ChatColor.GOLD + "   Победил: ");

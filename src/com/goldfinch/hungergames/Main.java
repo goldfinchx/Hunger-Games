@@ -1,7 +1,6 @@
 package com.goldfinch.hungergames;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -16,7 +15,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Main.instance = this;
 
-        Bukkit.getPluginCommand("arena").setExecutor(new ArenaCommand());
+        Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
         Bukkit.getPluginManager().registerEvents(new DeathEvent(this), this);
 
         new Config(this);

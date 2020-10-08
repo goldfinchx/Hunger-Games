@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Game {
 
     private static Arena arena;
-    public int seconds;
     public static ArrayList<Player> alivePlayers;
 
     public Game(Arena arena) {
@@ -17,11 +16,11 @@ public class Game {
         alivePlayers = new ArrayList<>();
     }
 
-    public void start() {
+    public void start() { // игра все равно применяет на игроков скорборд
         arena.setState(GameStates.LIVE);
         arena.sendMessage(ChatColor.GOLD + "Победит последний выживший! Удачи!");
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 1, 5, 2);
+            player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 1, 5, 10);
             arena.createGameScoreboard(player);
             alivePlayers.add(player);
             DeathEvent.playersKills.put(player, 0);

@@ -15,9 +15,7 @@ public class Config {
         main.saveDefaultConfig();
     }
 
-    public static int getRequiredPlayers() {
-        return main.getConfig().getInt("required-players");
-    }
+    public static int getRequiredPlayers() { return main.getConfig().getInt("required-players"); }
 
     public static int getCountdownSeconds() { return main.getConfig().getInt("countdown-seconds"); }
 
