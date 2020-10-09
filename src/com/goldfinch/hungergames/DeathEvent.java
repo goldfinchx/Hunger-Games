@@ -13,13 +13,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class DeathEvent implements Listener {
 
     private Main main;
     public Arena arena;
+    public static ArrayList<Player> alivePlayers;
     public static Player winner;
     public static String killer1name;
     public static int killer1kills;
@@ -27,6 +30,7 @@ public class DeathEvent implements Listener {
 
     public DeathEvent(Main main) {
         this.main = main;
+        alivePlayers = new ArrayList<>();
     }
 
     @EventHandler
@@ -41,7 +45,7 @@ public class DeathEvent implements Listener {
 
                         death.setGameMode(GameMode.SPECTATOR);
                         death.sendTitle(ChatColor.RED + "Вы умерли", ChatColor.WHITE + "Чтобы начать новую игру, напишите /arena leave ", 1, 5, 2);
-                        Game.alivePlayers.remove(death);
+                        alivePlayers.remove(death);
 
                         Location location;
                         location = killer.getLocation();
@@ -51,8 +55,8 @@ public class DeathEvent implements Listener {
 
                         // main.data.getConfig().set("players." + killer.getUniqueID().toString() + ".kills", kills++)
 
-                        if (Game.alivePlayers.size() == 1) {
-                            winner = Game.alivePlayers.get(0);
+                        if (alivePlayers.size() == 1) {
+                            winner = alivePlayers.get(0);
                             // main.data.getConfig().set("players." + winner.getUniqueID().toString() + ".wins", wins++)
 
                             for (Map.Entry<Player, Integer> entry : playersKills.entrySet()) {

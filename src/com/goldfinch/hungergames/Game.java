@@ -4,17 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import java.util.ArrayList;
 
 public class Game {
 
+    private DeathEvent deathEvent;
     private static Arena arena;
-    public static ArrayList<Player> alivePlayers;
 
-    public Game(Arena arena) {
-        this.arena = arena;
-        alivePlayers = new ArrayList<>();
-    }
+    public Game(Arena arena) { this.arena = arena; }
 
     public void start() { // игра все равно применяет на игроков скорборд
         arena.setState(GameStates.LIVE);
@@ -22,7 +18,7 @@ public class Game {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 1, 5, 10);
             arena.createGameScoreboard(player);
-            alivePlayers.add(player);
+            DeathEvent.alivePlayers.add(player);
             DeathEvent.playersKills.put(player, 0);
             runGameTimer(player);
         }

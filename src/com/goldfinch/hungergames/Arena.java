@@ -18,11 +18,12 @@ public class Arena {
 
     private int id;
     public int seconds;
-    private ArrayList<UUID> players;
+    public ArrayList<UUID> players;
     private Location spawn;
     private GameStates state;
     private Countdown countdown;
     private Game game;
+    private DeathEvent deathEvent;
 
     public Arena (int id) {
         this.id = id;
@@ -70,8 +71,9 @@ public class Arena {
 
     public void addPlayer (Player player) {
         players.add(player.getUniqueId());
+        player.sendMessage("ПРОВЕРКА СВЯЗИ НАХУЙ");
         player.teleport(spawn);
-        Game.alivePlayers.add(player);
+        deathEvent.alivePlayers.add(player);
 
         if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); }
     }
@@ -79,7 +81,7 @@ public class Arena {
     public void removePlayer (Player player) {
         players.remove(player.getUniqueId());
         player.teleport(Config.getLobbySpawn());
-        Game.alivePlayers.remove(player);
+        deathEvent.alivePlayers.remove(player);
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN))

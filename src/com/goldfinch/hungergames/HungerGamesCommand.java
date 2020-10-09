@@ -6,11 +6,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
 public class HungerGamesCommand implements CommandExecutor {
+    private Arena arena;
+    private DeathEvent deathEvent;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player player = (Player) sender;
+        int playersAmount = deathEvent.alivePlayers.size();
 
         if (sender instanceof Player) {
             if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
@@ -19,19 +23,21 @@ public class HungerGamesCommand implements CommandExecutor {
                 for (Arena arena : Manager.getArenas()) {
                     player.sendMessage(ChatColor.GRAY + "- " + arena.getID());
                 }
-                player.sendMessage("       ");
-
 
             } else if (args.length == 1 && args[0].equalsIgnoreCase("leave")) {
                 if (Manager.isPlaying(player)) {
                     Manager.getArena(player).removePlayer(player);
 
-                    player.sendMessage(ChatColor.RED + "Ты покинул арену.");
+                    // внизу какая-то херня с arena.sendMessage, проверить
+
+                    for (Player players : deathEvent.alivePlayers) {
+                        players.sendMessage(ChatColor.RED + "(" + ChatColor.DARK_GRAY + (playersAmount-1) + ChatColor.RED + "/" + ChatColor.DARK_GRAY + Config.getMaxPlayersAmount() + ChatColor.RED + ") "
+                                + ChatColor.DARK_GRAY + player.getName() + ChatColor.RED + " вышел с арены.");
+                    }
+
                 } else {
                     player.sendMessage(ChatColor.RED + "Ты не находишься на арене, чтобы её покидать!");
                 }
-                player.sendMessage("       ");
-
 
             } else if (args.length == 2 && args[0].equalsIgnoreCase("join")) {
                 if (!Manager.isPlaying(player)) {
@@ -42,7 +48,10 @@ public class HungerGamesCommand implements CommandExecutor {
                             if (Manager.isRecruiting(id)) {
                                 Manager.getArena(id).addPlayer(player);
 
-                                player.sendMessage(ChatColor.GREEN + "Ты зашёл на арену " + id);
+                                for (Player players : deathEvent.alivePlayers) {
+                                    players.sendMessage(ChatColor.GREEN + "(" + ChatColor.GOLD + (playersAmount+1) + ChatColor.GREEN + "/" + ChatColor.GOLD + Config.getMaxPlayersAmount() + ChatColor.GREEN + ") "
+                                            + ChatColor.GOLD + player.getName() + ChatColor.GREEN + " зашёл на арену.");
+                                }
                             } else {
                                 player.sendMessage(ChatColor.RED + "Ты уже находишься на другой арене!");
                                 player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + ", чтобы выйти с этой арены.");
@@ -51,15 +60,12 @@ public class HungerGamesCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "Арены с таким номером не существует!");
                             player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg list" + ChatColor.WHITE + ", чтобы посмотреть все доступные арены.");
                         }
-                        player.sendMessage("       ");
                     } catch (NumberFormatException x) {
                         player.sendMessage(ChatColor.RED + "Арены с таким номером не существует!");
                         player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg list" + ChatColor.WHITE + ", чтобы посмотреть все доступные арены.");
-                        player.sendMessage("       ");
                     }
                 } else {
                     player.sendMessage(ChatColor.RED + "Ты уже находишься в игре!");
-                    player.sendMessage("       ");
                 }
 
 
@@ -69,11 +75,10 @@ public class HungerGamesCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.GRAY + "/hg join [Номер]" + ChatColor.WHITE + " - войти на выбранную арену");
                 player.sendMessage(ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + " - выйти с арены");
                 player.sendMessage(ChatColor.GRAY + "/hg help" + ChatColor.WHITE + " - посмотреть список всех доступных команд");
-                player.sendMessage("       ");
+                player.sendMessage(deathEvent.alivePlayers.size() + "");
             } else {
                 player.sendMessage(ChatColor.RED + "Неизвестная команда! Используй ");
                 player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg help" + ChatColor.WHITE + ", чтобы посмотреть все доступные команды.");
-                player.sendMessage("       ");
             }
 
         } else {
