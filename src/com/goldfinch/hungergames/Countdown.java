@@ -15,6 +15,7 @@ public class Countdown extends BukkitRunnable {
 
     public void begin() {
         arena.setState(GameStates.COUNTDOWN);
+        System.out.println("Countdown/Begin/CountdownSet");
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
@@ -23,6 +24,7 @@ public class Countdown extends BukkitRunnable {
         if (seconds == 0) {
             cancel();
             arena.start();
+            System.out.println("Countdown/0");
             return;
         }
 
@@ -35,8 +37,10 @@ public class Countdown extends BukkitRunnable {
         }
 
         if (arena.getPlayers().size() < Config.getRequiredPlayers()) {
+
             cancel();
             arena.setState(GameStates.RECRUITING);
+            System.out.println("Countdown/cancel/RecruitingSet");
             arena.sendMessage(ChatColor.RED + "Недостаточно игроков для начала! Отсчет до начала игры остановлен.");
             return;
         }

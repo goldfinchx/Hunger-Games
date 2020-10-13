@@ -21,7 +21,7 @@ public class Manager {
 
     public static boolean isPlaying(Player player) {
         for (Arena arena : arenas) {
-            if (arena.getPlayers().contains(player.getUniqueId()))
+            if (arena.getPlayers().contains(player))
                 return true;
         }
         return false;
@@ -29,7 +29,7 @@ public class Manager {
 
     public static Arena getArena(Player player) {
         for (Arena arena : arenas) {
-            if (arena.getPlayers().contains(player.getUniqueId()))
+            if (arena.getPlayers().contains(player))
                 return arena;
 
         }
