@@ -75,6 +75,7 @@ public class Arena {
         players.remove(player);
         player.teleport(Config.getLobbySpawn());
         DeathEvent.alivePlayers.remove(player);
+        game.cancelGameTimer(player);
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN)) { reset(); System.out.println("Arena/removePlayer/reset " + id);}

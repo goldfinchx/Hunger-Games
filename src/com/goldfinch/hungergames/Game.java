@@ -1,5 +1,6 @@
 package com.goldfinch.hungergames;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,6 +12,7 @@ public class Game {
     private Arena arena;
     private DeathEvent deathEvent;
     private HashMap<Player, Integer> time;
+    private Main main;
 
     public Game(Arena arena) {
         this.arena = arena;
@@ -32,7 +34,7 @@ public class Game {
         }
     }
 
-    public void runGameTimer(Player player) {
+   /* public void runGameTimer(Player player) {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -42,5 +44,22 @@ public class Game {
             }
         }.runTaskTimer(Main.getInstance(), 0, 20);
     }
+*/
+
+    private int counter;
+    public void runGameTimer(Player player) {
+        counter = Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getInstance(), new Runnable() {
+            public void run() {
+                time.put(player, (time.get(player) + 1));
+                player.getScoreboard().getTeam("timeteam").setSuffix(String.valueOf(time.get(player)));
+            }
+        }, 0L, 20L);
+
+    }
+
+    public void cancelGameTimer(Player player) {
+        Bukkit.getScheduler().cancelTask(counter);
+    }
+
 
 }

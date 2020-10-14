@@ -16,6 +16,7 @@ public class Main extends JavaPlugin {
         Main.instance = this;
 
         Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
+        Bukkit.getPluginManager().registerEvents(new QuitEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new DeathEvent(this), this);
 
         new Config(this);
