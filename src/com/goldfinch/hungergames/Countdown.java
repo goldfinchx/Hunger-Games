@@ -46,5 +46,6 @@ public class Countdown extends BukkitRunnable {
         }
 
         seconds--;
+        System.out.println("Countdown " + seconds + " " + arena.getID());
     }
 }

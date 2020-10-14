@@ -46,8 +46,6 @@ public class Manager {
     }
 
     public static boolean isRecruiting(int id) {
-        if (getArena(id).getState() == GameStates.RECRUITING) {
-            return true;
-        } else { return false; }
+        return getArena(id).getState() == GameStates.RECRUITING;
     }
 }

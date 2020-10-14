@@ -27,12 +27,12 @@ public class HungerGamesCommand implements CommandExecutor {
                 if (Manager.isPlaying(player)) {
                     Manager.getArena(player).removePlayer(player);
 
-                    player.sendTitle(ChatColor.RED + "ВЫ ВЫШЛИ С АРЕНЫ.", "", 20*1, 20*5, 20*3);
+                    player.sendTitle(ChatColor.RED + "ВЫ ВЫШЛИ С АРЕНЫ.", "", 20 * 1, 20 * 5, 20 * 3);
 
                     int playersAmount = (arena.players.size() - 1);
                     for (Player players : deathEvent.alivePlayers) {
-                    players.sendMessage(ChatColor.RED + "(" + ChatColor.DARK_GRAY + (playersAmount-1) + ChatColor.RED + "/" + ChatColor.DARK_GRAY + Config.getMaxPlayersAmount() + ChatColor.RED + ") "
-                            + ChatColor.RED + "Игрок " + ChatColor.DARK_GRAY + player.getName() + ChatColor.RED + " вышел с арены.");
+                        players.sendMessage(ChatColor.RED + "(" + ChatColor.DARK_GRAY + (playersAmount - 1) + ChatColor.RED + "/" + ChatColor.DARK_GRAY + Config.getMaxPlayersAmount() + ChatColor.RED + ") "
+                                + ChatColor.RED + "Игрок " + ChatColor.DARK_GRAY + player.getName() + ChatColor.RED + " вышел с арены.");
                     }
 
                 } else {
@@ -42,19 +42,18 @@ public class HungerGamesCommand implements CommandExecutor {
             } else if (args.length == 2 && args[0].equalsIgnoreCase("join")) {
                 if (!Manager.isPlaying(player)) {
                     try {
-
                         int id = Integer.parseInt(args[1]);
 
                         if (id >= 0 && id <= (Config.getArenasAmount()) - 1) {
                             if (Manager.isRecruiting(id)) {
                                 Manager.getArena(id).addPlayer(player);
 
-                                player.sendTitle(ChatColor.GREEN + "ВЫ ЗАШЛИ НА АРЕНУ.", "", 20*1, 20*5, 20*3);
+                                player.sendTitle(ChatColor.GREEN + "ВЫ ЗАШЛИ НА АРЕНУ.", "", 20 * 1, 20 * 5, 20 * 3);
 
                                 int playersAmount = (deathEvent.alivePlayers.size() - 1);
                                 for (Player players : deathEvent.alivePlayers) {
-                                players.sendMessage(ChatColor.GREEN + "(" + ChatColor.GOLD + (playersAmount+1) + ChatColor.GREEN + "/" + ChatColor.GOLD + Config.getMaxPlayersAmount() + ChatColor.GREEN + ") "
-                                        + ChatColor.GREEN + "Игрок "+ ChatColor.GOLD + player.getName() + ChatColor.GREEN + " зашёл на арену.");
+                                    players.sendMessage(ChatColor.GREEN + "(" + ChatColor.GOLD + (playersAmount + 1) + ChatColor.GREEN + "/" + ChatColor.GOLD + Config.getMaxPlayersAmount() + ChatColor.GREEN + ") "
+                                            + ChatColor.GREEN + "Игрок " + ChatColor.GOLD + player.getName() + ChatColor.GREEN + " зашёл на арену.");
                                 }
                             } else {
                                 player.sendMessage(ChatColor.RED + "Ты уже находишься на другой арене!");
@@ -73,13 +72,13 @@ public class HungerGamesCommand implements CommandExecutor {
                 }
 
 
-            } else if ((args.length == 1 && args[0].equalsIgnoreCase("help")) || args.length == 0){
+            } else if ((args.length == 1 && args[0].equalsIgnoreCase("help")) || args.length == 0) {
                 player.sendMessage(ChatColor.GOLD + "Все доступные команды мини-режима Hunger Games:");
                 player.sendMessage(ChatColor.GRAY + "/hg list" + ChatColor.WHITE + " - список всех доступных арен");
                 player.sendMessage(ChatColor.GRAY + "/hg join [Номер]" + ChatColor.WHITE + " - войти на выбранную арену");
                 player.sendMessage(ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + " - выйти с арены");
                 player.sendMessage(ChatColor.GRAY + "/hg help" + ChatColor.WHITE + " - посмотреть список всех доступных команд");
-                player.sendMessage(Arena.players.size() + "");
+                player.sendMessage(arena.players.size() + "");
                 player.sendMessage(Manager.getArena(0).getState().toString());
                 player.sendMessage(Manager.getArena(1).getState().toString());
                 player.sendMessage(Manager.getArena(2).getState().toString());

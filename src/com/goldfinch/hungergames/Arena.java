@@ -17,7 +17,7 @@ public class Arena {
 
     private int id;
     public int seconds;
-    public static ArrayList<Player> players;
+    public ArrayList<Player> players;
     private Location spawn;
     private GameStates state;
     private Countdown countdown;
@@ -33,7 +33,7 @@ public class Arena {
         game = new Game(this);
     }
 
-    public void start() { game.start(); System.out.println("Arena/Start");}
+    public void start() { game.start(); System.out.println("Arena/Start " + id);}
 
     public void reset() {
         for (Player player : players) {
@@ -42,11 +42,11 @@ public class Arena {
             Bukkit.getScheduler().cancelTask(seconds);
             new BukkitRunnable() {
                 @Override
-                public void run() { removePlayer(player); System.out.println("Arena/runnable/removePlayer");}
+                public void run() { removePlayer(player); System.out.println("Arena/runnable/removePlayer " + id);}
             }.runTaskLater(Main.getInstance(), 20*10);
 
             player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-            System.out.println("Arena/reset");
+            System.out.println("Arena/reset " + id);
         }
 
         state = GameStates.RECRUITING;
@@ -58,7 +58,7 @@ public class Arena {
     public void sendMessage (String message) {
         for (Player player : players) {
             player.sendMessage(message);
-            System.out.println("Arena/sendMessage");
+            System.out.println("Arena/sendMessage " + id);
         }
     }
 
@@ -67,8 +67,8 @@ public class Arena {
         DeathEvent.alivePlayers.add(player);
         player.teleport(spawn);
 
-        if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); System.out.println("Arena/addPlayer=CountdownBegins");}
-        System.out.println("Arena/addPlayer");
+        if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); System.out.println("Arena/addPlayer=CountdownBegins " + id);}
+        System.out.println("Arena/addPlayer " + id);
     }
 
     public void removePlayer (Player player) {
@@ -77,11 +77,11 @@ public class Arena {
         DeathEvent.alivePlayers.remove(player);
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN)) { reset(); System.out.println("Arena/removePlayer/reset");}
+        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN)) { reset(); System.out.println("Arena/removePlayer/reset " + id);}
 
-        if (players.size() == 0 && state.equals(GameStates.LIVE)) { reset();  System.out.println("Arena/removePlayer/reset2"); }
+        if (players.size() == 0 && state.equals(GameStates.LIVE)) { reset();  System.out.println("Arena/removePlayer/reset2 " + id); }
 
-        System.out.println("Arena/removePlayer");
+        System.out.println("Arena/removePlayer " + id);
     }
 
     public void createGameScoreboard(Player player) {
@@ -99,7 +99,7 @@ public class Arena {
         obj.getScore(ChatColor.RED + "" + ChatColor.YELLOW).setScore(1);
 
         player.setScoreboard(board);
-        System.out.println("Arena/createGameScoreboard");
+        System.out.println("Arena/createGameScoreboard " + id);
     }
 
 
