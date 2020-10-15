@@ -23,8 +23,9 @@ public class Game {
         arena.setState(GameStates.LIVE);
         arena.sendMessage(ChatColor.GOLD + "Победит последний выживший! Удачи!");
         System.out.println("Game/start/setLiveState " + arena.getID());
+
         for (Player player : arena.getPlayers()) {
-            player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 1, 5, 10);
+            player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 20*1, 20*5, 20*2);
             arena.createGameScoreboard(player);
             DeathEvent.alivePlayers.add(player);
             time.put(player, 0);
@@ -34,24 +35,23 @@ public class Game {
         }
     }
 
-   /* public void runGameTimer(Player player) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
 
-                time.put(player, (time.get(player) + 1));
-                player.getScoreboard().getTeam("timeteam").setSuffix(String.valueOf(time.get(player)));
-            }
-        }.runTaskTimer(Main.getInstance(), 0, 20);
-    }
-*/
 
     private int counter;
+    int totalTime;
+
     public void runGameTimer(Player player) {
         counter = Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getInstance(), new Runnable() {
             public void run() {
-                time.put(player, (time.get(player) + 1));
-                player.getScoreboard().getTeam("timeteam").setSuffix(String.valueOf(time.get(player)));
+                totalTime = time.get(player);
+
+                int minutes = (totalTime%3600)/60;
+                int seconds = totalTime%60;
+                String timeString = String.format("%02d:%02d", minutes, seconds);
+
+                time.put(player, (totalTime + 1));
+
+                player.getScoreboard().getTeam("timeteam").setSuffix(timeString);
             }
         }, 0L, 20L);
 

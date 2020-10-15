@@ -64,6 +64,7 @@ public class Arena {
 
     public void addPlayer (Player player) {
         players.add(player);
+        player.sendMessage("add");
         DeathEvent.alivePlayers.add(player);
         player.teleport(spawn);
 
@@ -89,15 +90,26 @@ public class Arena {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 
         Objective obj = board.registerNewObjective("hungergames", "dummy");
-        obj.setDisplayName(ChatColor.BLUE.toString() + ChatColor.BOLD + "Hunger Games");
+        obj.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Голодные игры");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Team time = board.registerNewTeam("timeteam");
-        time.addEntry(ChatColor.RED + "" + ChatColor.YELLOW);
-        time.setPrefix("Время " + ChatColor.DARK_GRAY + "» ");
+        time.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
+        time.setPrefix(ChatColor.GRAY + "");
         time.setSuffix(String.valueOf(seconds));
 
-        obj.getScore(ChatColor.RED + "" + ChatColor.YELLOW).setScore(1);
+        obj.getScore("    ").setScore(11);
+        obj.getScore(ChatColor.YELLOW + "Живых игроков").setScore(10);
+        obj.getScore(ChatColor.WHITE + "3 игрока").setScore(9); // тут берем alivePlayers
+        obj.getScore("   ").setScore(8);
+        obj.getScore(ChatColor.YELLOW + "Ближайшее событие").setScore(7);
+        obj.getScore(ChatColor.WHITE + "Обновление сундуков").setScore(6); // берём стринг событие
+        obj.getScore("  ").setScore(5);
+        obj.getScore(ChatColor.YELLOW + "Время").setScore(4);
+        obj.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(3);
+        obj.getScore(" ").setScore(2);
+        obj.getScore(ChatColor.WHITE + "www.server.ru").setScore(1);
+
 
         player.setScoreboard(board);
         System.out.println("Arena/createGameScoreboard " + id);

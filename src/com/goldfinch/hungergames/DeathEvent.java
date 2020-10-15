@@ -36,14 +36,39 @@ public class DeathEvent implements Listener {
         Player death = e.getEntity();
 
             if (Manager.getArena(killer).getState() == GameStates.LIVE) {
-                System.out.println("11111111111111111111111111111111111");
-                        death.sendMessage("тебя убили");
-                        killer.sendMessage("ты умер");
-                System.out.println("DeathEvent/PlayerDeath");
+                death.sendMessage("тебя убили");
+                killer.sendMessage("ты умер");
 
-                    } else {
-                System.out.println("чтож*******************8");
-            }
+                for (Player player : arena.players) {
+                    e.setDeathMessage((ChatColor.GRAY + death.getName() + ChatColor.RED + "был убил" + ChatColor.GRAY + killer.getName()));
+                    player.playSound(player.getLocation(), Sound.ITEM_HOE_TILL, 1.0F, 1.0F);
+                }
+
+                death.spigot().respawn();
+                death.setGameMode(GameMode.SPECTATOR);
+                death.sendTitle(ChatColor.RED + "Вас убил " + killer.getName(), ChatColor.WHITE + "Чтобы начать новую игру, напишите /arena leave ", 20*1, 20*5, 20*5);
+                alivePlayers.remove(death);
+
+                int kills = playersKills.get(killer);
+                playersKills.put(killer, kills++);
+
+                if (alivePlayers.size() == 1) {
+                    winner = alivePlayers.get(0);
+                    // main.data.getConfig().set("players." + winner.getUniqueID().toString() + ".wins", wins++)
+
+                    for (Map.Entry<Player, Integer> entry : playersKills.entrySet()) {
+                        if (entry.getValue() >= 0) {
+                            killer1kills = entry.getValue();
+                            killer1name = entry.getKey().getName();
+                        }
+                    }
+                    arena.reset();
+                }
+
+
+
+
+                    }
 
        /* if (arena.getState() == GameStates.LIVE) {
             if (e.getEntity().getType().equals(EntityType.PLAYER)) {
@@ -59,9 +84,9 @@ public class DeathEvent implements Listener {
 
                     Location location;
                     location = killer.getLocation();
-                    int kills = playersKills.get(killer);
+
                     killer.playSound(location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.1F, 0.5F);
-                    playersKills.put(killer, kills++);
+
 
                 // main.data.getConfig().set("players." + killer.getUniqueID().toString() + ".kills", kills++)
 

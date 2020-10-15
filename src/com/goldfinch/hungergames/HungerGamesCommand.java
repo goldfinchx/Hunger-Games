@@ -78,7 +78,8 @@ public class HungerGamesCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.GRAY + "/hg join [Номер]" + ChatColor.WHITE + " - войти на выбранную арену");
                 player.sendMessage(ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + " - выйти с арены");
                 player.sendMessage(ChatColor.GRAY + "/hg help" + ChatColor.WHITE + " - посмотреть список всех доступных команд");
-                player.sendMessage(arena.players.size() + "");
+                player.sendMessage(arena.getPlayers().toString());
+                player.sendMessage(deathEvent.playersKills.get(player).toString());
                 player.sendMessage(Manager.getArena(0).getState().toString());
                 player.sendMessage(Manager.getArena(1).getState().toString());
                 player.sendMessage(Manager.getArena(2).getState().toString());
