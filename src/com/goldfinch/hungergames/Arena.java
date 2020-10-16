@@ -2,6 +2,7 @@ package com.goldfinch.hungergames;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +18,8 @@ public class Arena {
 
     private int id;
     public int seconds;
-    public ArrayList<Player> players;
+    public  ArrayList<Player> players;
+    public ArrayList<Player> alivePlayers;
     private Location spawn;
     private GameStates state;
     private Countdown countdown;
@@ -27,6 +29,7 @@ public class Arena {
     public Arena (int id) {
         this.id = id;
         players = new ArrayList<>();
+        alivePlayers = new ArrayList<>();
         spawn = Config.getArenaSpawn(id);
         state = GameStates.RECRUITING;
         countdown = new Countdown(this);
@@ -37,16 +40,20 @@ public class Arena {
 
     public void reset() {
         for (Player player : players) {
-            player.teleport(Config.getLobbySpawn());
-
+            player.sendMessage(deathEvent.winner.getName());
+            player.sendMessage(deathEvent.killer1name + " убил " + deathEvent.killer1kills);
             Bukkit.getScheduler().cancelTask(seconds);
+
             new BukkitRunnable() {
                 @Override
-                public void run() { removePlayer(player); System.out.println("Arena/runnable/removePlayer " + id);}
-            }.runTaskLater(Main.getInstance(), 20*10);
+                public void run() {
+                    player.teleport(Config.getLobbySpawn());
+                    alivePlayers.remove(player);
+                    game.cancelGameTimer(player);
+                    player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-            System.out.println("Arena/reset " + id);
+                }
+            }.runTaskLater(Main.getInstance(), 20*10);
         }
 
         state = GameStates.RECRUITING;
@@ -64,9 +71,8 @@ public class Arena {
 
     public void addPlayer (Player player) {
         players.add(player);
-        player.sendMessage("add");
-        DeathEvent.alivePlayers.add(player);
         player.teleport(spawn);
+        alivePlayers.add(player);
 
         if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); System.out.println("Arena/addPlayer=CountdownBegins " + id);}
         System.out.println("Arena/addPlayer " + id);
@@ -74,8 +80,9 @@ public class Arena {
 
     public void removePlayer (Player player) {
         players.remove(player);
+        player.setGameMode(GameMode.SURVIVAL);
         player.teleport(Config.getLobbySpawn());
-        DeathEvent.alivePlayers.remove(player);
+        alivePlayers.remove(player);
         game.cancelGameTimer(player);
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
@@ -93,6 +100,11 @@ public class Arena {
         obj.setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Голодные игры");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
+        Team alive = board.registerNewTeam("aliveteam");
+        alive.addEntry(ChatColor.BLUE + "" + ChatColor.WHITE);
+        alive.setPrefix("");
+        alive.setSuffix(alivePlayers.size() + " игроков");
+
         Team time = board.registerNewTeam("timeteam");
         time.addEntry(ChatColor.RED + "" + ChatColor.WHITE);
         time.setPrefix(ChatColor.GRAY + "");
@@ -100,15 +112,21 @@ public class Arena {
 
         obj.getScore("    ").setScore(11);
         obj.getScore(ChatColor.YELLOW + "Живых игроков").setScore(10);
-        obj.getScore(ChatColor.WHITE + "3 игрока").setScore(9); // тут берем alivePlayers
+        obj.getScore(ChatColor.BLUE + "" + ChatColor.WHITE).setScore(9);
+
         obj.getScore("   ").setScore(8);
+
         obj.getScore(ChatColor.YELLOW + "Ближайшее событие").setScore(7);
         obj.getScore(ChatColor.WHITE + "Обновление сундуков").setScore(6); // берём стринг событие
+
         obj.getScore("  ").setScore(5);
+
         obj.getScore(ChatColor.YELLOW + "Время").setScore(4);
         obj.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(3);
+
         obj.getScore(" ").setScore(2);
-        obj.getScore(ChatColor.WHITE + "www.server.ru").setScore(1);
+
+        obj.getScore(ChatColor.WHITE + "      www.server.ru").setScore(1);
 
 
         player.setScoreboard(board);

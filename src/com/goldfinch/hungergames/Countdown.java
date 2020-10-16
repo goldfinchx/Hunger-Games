@@ -31,8 +31,10 @@ public class Countdown extends BukkitRunnable {
         if (seconds % 30 == 0 || seconds <= 10) {
             if (seconds == 1) {
                 arena.sendMessage(ChatColor.GREEN + "Игра начинается! Удачи! ");
+            } else if (seconds == 2 || seconds == 3 || seconds == 4) {
+                arena.sendMessage(ChatColor.GREEN + "Игра начнётся через " + ChatColor.GOLD + seconds + ChatColor.GREEN + " секунды!");
             } else {
-                arena.sendMessage(ChatColor.GREEN + "Игра начнётся через " + seconds + " секунд!");
+                arena.sendMessage(ChatColor.GREEN + "Игра начнётся через " + ChatColor.GOLD + seconds + ChatColor.GREEN + " секунд!");
             }
         }
 

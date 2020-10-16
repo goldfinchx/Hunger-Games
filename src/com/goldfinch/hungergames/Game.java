@@ -24,18 +24,17 @@ public class Game {
         arena.sendMessage(ChatColor.GOLD + "Победит последний выживший! Удачи!");
         System.out.println("Game/start/setLiveState " + arena.getID());
 
+        int i = 0;
+
         for (Player player : arena.getPlayers()) {
             player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 20*1, 20*5, 20*2);
-            arena.createGameScoreboard(player);
-            DeathEvent.alivePlayers.add(player);
             time.put(player, 0);
             DeathEvent.playersKills.put(player, 0);
             runGameTimer(player);
             System.out.println(player + " ");
+            arena.createGameScoreboard(player);
         }
     }
-
-
 
     private int counter;
     int totalTime;
