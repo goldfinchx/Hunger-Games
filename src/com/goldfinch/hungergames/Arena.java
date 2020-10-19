@@ -40,9 +40,20 @@ public class Arena {
 
     public void reset() {
         for (Player player : players) {
-            player.sendMessage(deathEvent.winner.getName());
-            player.sendMessage(deathEvent.killer1name + " убил " + deathEvent.killer1kills);
             Bukkit.getScheduler().cancelTask(seconds);
+
+            player.sendMessage(deathEvent.winner.getName());
+            player.sendMessage(" ");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + " " + "Игра завершена!");
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "Победил " + deathEvent.winner.getName());
+            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "1. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
+            player.sendMessage(ChatColor.GOLD + "2. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
+            player.sendMessage(ChatColor.GOLD + "3. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
+            player.sendMessage(" ");
+            player.sendMessage(" ");
 
             new BukkitRunnable() {
                 @Override
@@ -50,8 +61,9 @@ public class Arena {
                     player.teleport(Config.getLobbySpawn());
                     alivePlayers.remove(player);
                     game.cancelGameTimer(player);
+                    player.setGameMode(GameMode.SURVIVAL);
                     player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-
+                    cancel();
                 }
             }.runTaskLater(Main.getInstance(), 20*10);
         }

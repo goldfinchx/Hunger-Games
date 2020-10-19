@@ -29,10 +29,14 @@ public class DeathEvent implements Listener {
         Player killer = e.getEntity().getKiller();
         Player death = e.getEntity();
 
-        if (Manager.getArena(killer).getState() == GameStates.LIVE) {
+        if (Manager.getArena(death).getState() == GameStates.LIVE) {
             death.spigot().respawn();
             death.setGameMode(GameMode.SPECTATOR);
-            death.sendTitle(ChatColor.RED + "Тебя убили!", ChatColor.WHITE + "Чтобы начать новую игру, напишите /arena leave ", 20 * 1, 20 * 5, 20 * 5);
+            death.sendTitle(ChatColor.RED + "Тебя убили!", ChatColor.WHITE + "Чтобы начать новую игру, нажми на [ИГРАТЬ ЗАНОВО] в чате ", 20 * 1, 20 * 5, 20 * 5);
+            death.sendMessage(" ");
+            death.sendMessage(ChatColor.GOLD + "Хочешь начать новую игру?");
+            death.sendMessage(ChatColor.GREEN + "[ИГРАТЬ ЗАНОВО] " + ChatColor.RED + "[ВЕРНУТЬСЯ В ЛОББИ]");
+            death.sendMessage(" ");
 
             Manager.getArena(death).alivePlayers.remove(death);
 

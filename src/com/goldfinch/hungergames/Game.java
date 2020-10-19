@@ -13,6 +13,7 @@ public class Game {
     private DeathEvent deathEvent;
     private HashMap<Player, Integer> time;
     private Main main;
+    public String timeString;
 
     public Game(Arena arena) {
         this.arena = arena;
@@ -46,7 +47,7 @@ public class Game {
 
                 int minutes = (totalTime%3600)/60;
                 int seconds = totalTime%60;
-                String timeString = String.format("%02d:%02d", minutes, seconds);
+                timeString = String.format("%02d:%02d", minutes, seconds);
 
                 time.put(player, (totalTime + 1));
 
