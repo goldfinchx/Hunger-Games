@@ -55,20 +55,15 @@ public class DeathEvent implements Listener {
 
             if (Manager.getArena(killer).alivePlayers.size() == 1) {
                 winner = Manager.getArena(killer).alivePlayers.get(0);
-                System.out.println(ChatColor.BLUE + "RRRRRRRRRRRRRRR");
-                // main.data.getConfig().set("players." + winner.getUniqueID().toString() + ".wins", wins++)
-
 
                 for (Map.Entry<Player, Integer> entry : playersKills.entrySet()) {
                     if (entry.getValue() >= 0) {
                         killer1kills = entry.getValue();
                         killer1name = entry.getKey().getName();
-                        System.out.println(ChatColor.DARK_PURPLE + "353543534534534");
                     }
                 }
                 Manager.getArena(killer).reset();
             }
-
         }
     }
 }

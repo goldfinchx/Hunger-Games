@@ -29,7 +29,6 @@ public class HungerGamesCommand implements CommandExecutor {
 
                     player.sendTitle(ChatColor.RED + "ВЫ ВЫШЛИ ИЗ АРЕНЫ.", "", 20 * 1, 20 * 5, 20 * 3);
 
-                    System.out.println(Manager.getArena(player).getID() + " <<<<<<<<<<<<<<<<<<");
                     int playersAmount = (Manager.getArena(player).players.size() - 1);
                     for (Player players : Manager.getArena(Manager.getArena(player).getID()).getPlayers()) {
                         players.sendMessage(ChatColor.RED + "(" + ChatColor.DARK_GRAY + (playersAmount - 1) + ChatColor.RED + "/" + ChatColor.DARK_GRAY + Config.getMaxPlayersAmount() + ChatColor.RED + ") "
@@ -80,11 +79,7 @@ public class HungerGamesCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.GRAY + "/hg join [Номер]" + ChatColor.WHITE + " - войти на выбранную арену");
                 player.sendMessage(ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + " - выйти с арены");
                 player.sendMessage(ChatColor.GRAY + "/hg help" + ChatColor.WHITE + " - посмотреть список всех доступных команд");
-                player.sendMessage(Manager.getArena(player).alivePlayers.size() + "");
-                player.sendMessage(deathEvent.playersKills.get(player).toString());
-                player.sendMessage(Manager.getArena(0).getState().toString());
-                player.sendMessage(Manager.getArena(1).getState().toString());
-                player.sendMessage(Manager.getArena(2).getState().toString());
+
             } else {
                 player.sendMessage(ChatColor.RED + "Неизвестная команда! Используй ");
                 player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg help" + ChatColor.WHITE + ", чтобы посмотреть все доступные команды.");

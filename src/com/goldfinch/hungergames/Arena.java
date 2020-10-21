@@ -36,23 +36,24 @@ public class Arena {
         game = new Game(this);
     }
 
-    public void start() { game.start(); System.out.println("Arena/Start " + id);}
+    public void start() { game.start(); }
 
     public void reset() {
         for (Player player : players) {
             Bukkit.getScheduler().cancelTask(seconds);
+            game.cancelGameTimer();
 
-            player.sendMessage(deathEvent.winner.getName());
             player.sendMessage(" ");
+            player.sendMessage(ChatColor.GOLD + "          " + "Игра завершена!");
             player.sendMessage(" ");
-            player.sendMessage(ChatColor.GOLD + " " + "Игра завершена!");
+            player.sendMessage(ChatColor.GRAY + "               " + "Победил");
+            player.sendMessage(ChatColor.WHITE + "              " +  deathEvent.winner.getName());
             player.sendMessage(" ");
-            player.sendMessage(ChatColor.GOLD + "Победил " + deathEvent.winner.getName());
+            player.sendMessage(ChatColor.GRAY + "             " + "Игра длилась");
+            player.sendMessage(ChatColor.WHITE + "                 " +  Manager.getArena(id).getGame().timeString);
             player.sendMessage(" ");
-            player.sendMessage(ChatColor.GOLD + "1. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
-            player.sendMessage(ChatColor.GOLD + "2. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
-            player.sendMessage(ChatColor.GOLD + "3. " + deathEvent.killer1name + " - " + deathEvent.killer1kills + " убийств");
-            player.sendMessage(" ");
+            player.sendMessage(ChatColor.GRAY + "       " + "Больше всего убийств: ");
+            player.sendMessage(ChatColor.WHITE + "             " + deathEvent.killer1name + ChatColor.GRAY + " (" + ChatColor.WHITE + deathEvent.killer1kills + ChatColor.GRAY + ")");
             player.sendMessage(" ");
 
             new BukkitRunnable() {
@@ -60,7 +61,7 @@ public class Arena {
                 public void run() {
                     player.teleport(Config.getLobbySpawn());
                     alivePlayers.remove(player);
-                    game.cancelGameTimer(player);
+
                     player.setGameMode(GameMode.SURVIVAL);
                     player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
                     cancel();
@@ -75,10 +76,7 @@ public class Arena {
     }
 
     public void sendMessage (String message) {
-        for (Player player : players) {
-            player.sendMessage(message);
-            System.out.println("Arena/sendMessage " + id);
-        }
+        for (Player player : players) { player.sendMessage(message); }
     }
 
     public void addPlayer (Player player) {
@@ -86,8 +84,8 @@ public class Arena {
         player.teleport(spawn);
         alivePlayers.add(player);
 
-        if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); System.out.println("Arena/addPlayer=CountdownBegins " + id);}
-        System.out.println("Arena/addPlayer " + id);
+        if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); }
+
     }
 
     public void removePlayer (Player player) {
@@ -95,14 +93,11 @@ public class Arena {
         player.setGameMode(GameMode.SURVIVAL);
         player.teleport(Config.getLobbySpawn());
         alivePlayers.remove(player);
-        game.cancelGameTimer(player);
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN)) { reset(); System.out.println("Arena/removePlayer/reset " + id);}
+        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameStates.COUNTDOWN)) { reset(); }
 
-        if (players.size() == 0 && state.equals(GameStates.LIVE)) { reset();  System.out.println("Arena/removePlayer/reset2 " + id); }
-
-        System.out.println("Arena/removePlayer " + id);
+        if (players.size() == 0 && state.equals(GameStates.LIVE)) { reset(); }
     }
 
     public void createGameScoreboard(Player player) {
@@ -125,24 +120,16 @@ public class Arena {
         obj.getScore("    ").setScore(11);
         obj.getScore(ChatColor.YELLOW + "Живых игроков").setScore(10);
         obj.getScore(ChatColor.BLUE + "" + ChatColor.WHITE).setScore(9);
-
         obj.getScore("   ").setScore(8);
-
         obj.getScore(ChatColor.YELLOW + "Ближайшее событие").setScore(7);
         obj.getScore(ChatColor.WHITE + "Обновление сундуков").setScore(6); // берём стринг событие
-
         obj.getScore("  ").setScore(5);
-
         obj.getScore(ChatColor.YELLOW + "Время").setScore(4);
         obj.getScore(ChatColor.RED + "" + ChatColor.WHITE).setScore(3);
-
         obj.getScore(" ").setScore(2);
-
         obj.getScore(ChatColor.WHITE + "      www.server.ru").setScore(1);
 
-
         player.setScoreboard(board);
-        System.out.println("Arena/createGameScoreboard " + id);
     }
 
 
