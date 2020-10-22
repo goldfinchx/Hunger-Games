@@ -1,5 +1,8 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Core;
 
+import com.goldfinch.hungergames.Game.Chests.ChestListener;
+import com.goldfinch.hungergames.Game.DeathListener;
+import com.goldfinch.hungergames.Game.QuitListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,8 +19,9 @@ public class Main extends JavaPlugin {
         Main.instance = this;
 
         Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
-        Bukkit.getPluginManager().registerEvents(new QuitEvent(this), this);
-        Bukkit.getPluginManager().registerEvents(new DeathEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new QuitListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new DeathListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ChestListener(this), this);
 
         new Config(this);
         new Manager();

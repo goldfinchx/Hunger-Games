@@ -1,7 +1,9 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class Config {
 
@@ -40,4 +42,26 @@ public class Config {
     }
 
     public static int getArenasAmount() { return main.getConfig().getConfigurationSection("arenas").getKeys(false).size(); }
+
+    public static ItemStack getRandomItem() {
+        ItemStack item;
+        random = main.getRandomInteger(0, (main.getConfig().getConfigurationSection("items")).getKeys(false).size() - 1);
+        item = new ItemStack(Material.valueOf(main.getConfig().getString("items." + random + ".material")));
+
+        return item;
+    }
+
+    public static int getChance() {
+        int chance = main.getConfig().getInt("items." + random + ".chance");
+        return chance;
+    }
+
+    public static int getAmount() {
+        int amount = main.getRandomInteger((main.getConfig().getInt("items." + random + ".min")),(main.getConfig().getInt("items." + random + ".max")));
+
+        return amount;
+    }
+
+
+
 }

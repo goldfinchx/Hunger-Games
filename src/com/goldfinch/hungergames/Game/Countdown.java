@@ -1,5 +1,7 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game;
 
+import com.goldfinch.hungergames.Core.Config;
+import com.goldfinch.hungergames.Core.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 

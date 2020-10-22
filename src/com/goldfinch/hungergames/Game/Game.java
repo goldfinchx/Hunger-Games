@@ -1,5 +1,7 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game;
 
+import com.goldfinch.hungergames.Core.Main;
+import com.goldfinch.hungergames.Core.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 public class Game {
 
     private Arena arena;
-    private DeathEvent deathEvent;
+    private DeathListener deathListener;
     private HashMap<Game, Integer> time;
     private Main main;
     int counter;
@@ -31,7 +33,7 @@ public class Game {
 
         for (Player player : arena.getPlayers()) {
             player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.WHITE + "Убейте всех противников, для этого собирайте вещи в сундуках", 20*1, 20*5, 20*2);
-            DeathEvent.playersKills.put(player, 0);
+            DeathListener.playersKills.put(player, 0);
             arena.createGameScoreboard(player);
         }
     }

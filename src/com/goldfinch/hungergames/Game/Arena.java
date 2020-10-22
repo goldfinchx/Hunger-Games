@@ -1,5 +1,8 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game;
 
+import com.goldfinch.hungergames.Core.Config;
+import com.goldfinch.hungergames.Core.Main;
+import com.goldfinch.hungergames.Core.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -23,8 +26,9 @@ public class Arena {
     private Location spawn;
     private GameStates state;
     private Countdown countdown;
+    private TimeController timeController;
     private Game game;
-    private DeathEvent deathEvent;
+    private DeathListener deathListener;
 
     public Arena (int id) {
         this.id = id;
@@ -33,7 +37,9 @@ public class Arena {
         spawn = Config.getArenaSpawn(id);
         state = GameStates.RECRUITING;
         countdown = new Countdown(this);
+        timeController = new TimeController(this);
         game = new Game(this);
+
     }
 
     public void start() { game.start(); }
@@ -47,13 +53,13 @@ public class Arena {
             player.sendMessage(ChatColor.GOLD + "          " + "Игра завершена!");
             player.sendMessage(" ");
             player.sendMessage(ChatColor.GRAY + "               " + "Победил");
-            player.sendMessage(ChatColor.WHITE + "              " +  deathEvent.winner.getName());
+            player.sendMessage(ChatColor.WHITE + "              " +  deathListener.winner.getName());
             player.sendMessage(" ");
             player.sendMessage(ChatColor.GRAY + "             " + "Игра длилась");
             player.sendMessage(ChatColor.WHITE + "                 " +  Manager.getArena(id).getGame().timeString);
             player.sendMessage(" ");
             player.sendMessage(ChatColor.GRAY + "       " + "Больше всего убийств: ");
-            player.sendMessage(ChatColor.WHITE + "             " + deathEvent.killer1name + ChatColor.GRAY + " (" + ChatColor.WHITE + deathEvent.killer1kills + ChatColor.GRAY + ")");
+            player.sendMessage(ChatColor.WHITE + "             " + deathListener.killer1name + ChatColor.GRAY + " (" + ChatColor.WHITE + deathListener.killer1kills + ChatColor.GRAY + ")");
             player.sendMessage(" ");
 
             new BukkitRunnable() {

@@ -1,4 +1,4 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game.Events;
 
 public class Events {
 

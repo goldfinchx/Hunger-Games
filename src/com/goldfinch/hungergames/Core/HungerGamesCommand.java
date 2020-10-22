@@ -1,5 +1,7 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Core;
 
+import com.goldfinch.hungergames.Game.Arena;
+import com.goldfinch.hungergames.Game.DeathListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class HungerGamesCommand implements CommandExecutor {
     private Arena arena;
-    private DeathEvent deathEvent;
+    private DeathListener deathListener;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

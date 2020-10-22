@@ -1,5 +1,7 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game;
 
+import com.goldfinch.hungergames.Core.Main;
+import com.goldfinch.hungergames.Core.Manager;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -11,7 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DeathEvent implements Listener {
+public class DeathListener implements Listener {
 
     private Main main;
     public Arena arena;
@@ -20,7 +22,7 @@ public class DeathEvent implements Listener {
     public static int killer1kills;
     public static HashMap<Player, Integer> playersKills = new HashMap<>();
 
-    public DeathEvent(Main main) {
+    public DeathListener(Main main) {
         this.main = main;
     }
 

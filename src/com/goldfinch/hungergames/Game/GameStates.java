@@ -1,4 +1,4 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Game;
 
 public enum GameStates {
 

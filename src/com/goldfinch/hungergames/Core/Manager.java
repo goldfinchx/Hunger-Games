@@ -1,5 +1,7 @@
-package com.goldfinch.hungergames;
+package com.goldfinch.hungergames.Core;
 
+import com.goldfinch.hungergames.Game.Arena;
+import com.goldfinch.hungergames.Game.GameStates;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
