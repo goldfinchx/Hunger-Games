@@ -3,7 +3,6 @@ package com.goldfinch.hungergames.Game.Chests;
 import com.goldfinch.hungergames.Core.Config;
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
-import com.goldfinch.hungergames.Game.GameStates;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

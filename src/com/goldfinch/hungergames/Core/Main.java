@@ -1,5 +1,8 @@
 package com.goldfinch.hungergames.Core;
 
+import com.goldfinch.hungergames.Commands.ClickableLeaveArenaCommand;
+import com.goldfinch.hungergames.Commands.ClickablePlayAgainCommand;
+import com.goldfinch.hungergames.Commands.HungerGamesCommand;
 import com.goldfinch.hungergames.Game.Chests.ChestListener;
 import com.goldfinch.hungergames.Game.DeathListener;
 import com.goldfinch.hungergames.Game.QuitListener;
@@ -16,15 +19,17 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Main.instance = this;
+        new Config(this);
+        new Manager();
 
         Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
         Bukkit.getPluginManager().registerEvents(new QuitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ChestListener(this), this);
+        Bukkit.getPluginCommand("dnn3n32osso3x").setExecutor(new ClickablePlayAgainCommand());
+        Bukkit.getPluginCommand("oo3inznejtn").setExecutor(new ClickableLeaveArenaCommand());
 
-        new Config(this);
-        new Manager();
+        Main.instance = this;
     }
 
     public static Main getInstance() { return instance; }

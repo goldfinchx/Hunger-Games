@@ -89,8 +89,14 @@ public class Arena {
         players.add(player);
         player.teleport(spawn);
         alivePlayers.add(player);
+        player.sendTitle(ChatColor.GREEN + "ТЫ ЗАШЁЛ НА АРЕНУ.", "", 20 * 1, 20 * 5, 20 * 3);
 
-        if (players.size() >= Config.getRequiredPlayers()) { countdown.begin(); }
+        for (Player players : players) {
+            players.sendMessage(ChatColor.GREEN + "(" + ChatColor.GOLD + Manager.getArena(id).getPlayers().size() + ChatColor.GREEN + "/" + ChatColor.GOLD + Config.getMaxPlayersAmount() + ChatColor.GREEN + ") "
+                    + ChatColor.GREEN + "Игрок " + ChatColor.GOLD + player.getName() + ChatColor.GREEN + " зашёл на арену.");
+        }
+
+        if (players.size() == Config.getRequiredPlayers()) { countdown.begin(); }
 
     }
 

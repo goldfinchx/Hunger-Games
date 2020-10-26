@@ -2,7 +2,10 @@ package com.goldfinch.hungergames.Game;
 
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -35,9 +38,22 @@ public class DeathListener implements Listener {
             death.spigot().respawn();
             death.setGameMode(GameMode.SPECTATOR);
             death.sendTitle(ChatColor.RED + "Тебя убили!", ChatColor.WHITE + "Чтобы начать новую игру, нажми на [ИГРАТЬ ЗАНОВО] в чате ", 20 * 1, 20 * 5, 20 * 5);
+
             death.sendMessage(" ");
             death.sendMessage(ChatColor.GOLD + "Хочешь начать новую игру?");
-            death.sendMessage(ChatColor.GREEN + "[ИГРАТЬ ЗАНОВО] " + ChatColor.RED + "[ВЕРНУТЬСЯ В ЛОББИ]");
+
+            TextComponent playAgain = new TextComponent("[ИГРАТЬ ЗАНОВО] ");
+            playAgain.setColor(ChatColor.GREEN);
+            playAgain.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dnn3n32osso3x"));
+
+            TextComponent leaveArena = new TextComponent("[ВЕРНУТЬСЯ В ЛОББИ]");
+            leaveArena.setColor(ChatColor.RED);
+            leaveArena.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/oo3inznejtn"));
+
+            playAgain.addExtra(" ");
+            playAgain.addExtra(leaveArena);
+            death.spigot().sendMessage(playAgain);
+
             death.sendMessage(" ");
 
             Manager.getArena(death).alivePlayers.remove(death);

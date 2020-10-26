@@ -1,7 +1,10 @@
-package com.goldfinch.hungergames.Core;
+package com.goldfinch.hungergames.Commands;
 
+import com.goldfinch.hungergames.Core.Config;
+import com.goldfinch.hungergames.Core.Manager;
 import com.goldfinch.hungergames.Game.Arena;
 import com.goldfinch.hungergames.Game.DeathListener;
+import com.goldfinch.hungergames.Game.GameStates;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,20 +50,9 @@ public class HungerGamesCommand implements CommandExecutor {
                         int id = Integer.parseInt(args[1]);
 
                         if (id >= 0 && id <= (Config.getArenasAmount()) - 1) {
-                            if (Manager.isRecruiting(id)) {
+                            if (Manager.isRecruiting(id) || Manager.getArena(id).getState() == GameStates.COUNTDOWN) {
                                 Manager.getArena(id).addPlayer(player);
 
-                                player.sendTitle(ChatColor.GREEN + "ВЫ ЗАШЛИ НА АРЕНУ.", "", 20 * 1, 20 * 5, 20 * 3);
-
-                                int playersAmount = (Manager.getArena(id).players.size() - 1);
-                                for (Player players : Manager.getArena(id).getPlayers()) {
-                                    players.sendMessage(ChatColor.GREEN + "(" + ChatColor.GOLD + (playersAmount + 1) + ChatColor.GREEN + "/" + ChatColor.GOLD + Config.getMaxPlayersAmount() + ChatColor.GREEN + ") "
-                                            + ChatColor.GREEN + "Игрок " + ChatColor.GOLD + player.getName() + ChatColor.GREEN + " зашёл на арену.");
-                                }
-
-                            } else {
-                                player.sendMessage(ChatColor.RED + "Ты уже находишься на другой арене!");
-                                player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + ", чтобы выйти с этой арены.");
                             }
                         } else {
                             player.sendMessage(ChatColor.RED + "Арены с таким номером не существует!");
@@ -71,7 +63,8 @@ public class HungerGamesCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg list" + ChatColor.WHITE + ", чтобы посмотреть все доступные арены.");
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED + "Ты уже находишься в игре!");
+                    player.sendMessage(ChatColor.RED + "Ты уже находишься на другой арене!");
+                    player.sendMessage(ChatColor.WHITE + "Используй " + ChatColor.GRAY + "/hg leave" + ChatColor.WHITE + ", чтобы выйти с этой арены.");
                 }
 
 

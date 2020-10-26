@@ -1,7 +1,5 @@
 package com.goldfinch.hungergames.Game;
 
-import com.goldfinch.hungergames.Core.Main;
-
 public class TimeController {
 
     private Arena arena;
