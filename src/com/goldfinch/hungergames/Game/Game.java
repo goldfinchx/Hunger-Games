@@ -2,9 +2,16 @@ package com.goldfinch.hungergames.Game;
 
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
+import com.goldfinch.hungergames.Game.Events.EventToxicRain;
+import com.goldfinch.hungergames.Game.Events.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
@@ -14,8 +21,11 @@ public class Game {
     private DeathListener deathListener;
     private HashMap<Game, Integer> time;
     private Main main;
+    private Events events;
     int counter;
     int totalTime;
+    int number;
+    int eventTimer;
     public String timeString;
 
     public Game(Arena arena) {
@@ -49,13 +59,35 @@ public class Game {
 
             timeString = String.format("%02d:%02d", minutes, seconds);
 
-
             for (Player player : Manager.getArena(arena.getID()).getPlayers()) {
+                player.sendMessage(number + "");
                 player.getScoreboard().getTeam("timeteam").setSuffix(timeString);
             }
 
-        }, 0L, 20L);
+            number++;
+            switch (number) {
+                case 30:
 
+                    events.runRandomEvent(game);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendMessage("FFFFFFFFFFF");
+                    }
+                   // events.runRefillingChests();
+
+                    break;
+                case 900:
+
+                    break;
+                case 1200:
+
+                    break;
+                default:
+
+                    break;
+            }
+
+
+        }, 0L, 20L);
     }
 
     public void cancelGameTimer() { Bukkit.getScheduler().cancelTask(counter); }

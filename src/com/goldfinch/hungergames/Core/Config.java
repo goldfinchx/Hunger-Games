@@ -43,6 +43,8 @@ public class Config {
 
     public static int getArenasAmount() { return main.getConfig().getConfigurationSection("arenas").getKeys(false).size(); }
 
+    /* ПРЕДМЕТЫ */
+
     public static ItemStack getRandomItem() {
         ItemStack item;
         random = main.getRandomInteger(0, (main.getConfig().getConfigurationSection("items")).getKeys(false).size() - 1);
@@ -62,6 +64,6 @@ public class Config {
         return amount;
     }
 
-
+    /* ЭВЕНТЫ */
 
 }

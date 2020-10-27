@@ -22,10 +22,11 @@ public class Main extends JavaPlugin {
         new Config(this);
         new Manager();
 
-        Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
         Bukkit.getPluginManager().registerEvents(new QuitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ChestListener(this), this);
+
+        Bukkit.getPluginCommand("hg").setExecutor(new HungerGamesCommand());
         Bukkit.getPluginCommand("dnn3n32osso3x").setExecutor(new ClickablePlayAgainCommand());
         Bukkit.getPluginCommand("oo3inznejtn").setExecutor(new ClickableLeaveArenaCommand());
 

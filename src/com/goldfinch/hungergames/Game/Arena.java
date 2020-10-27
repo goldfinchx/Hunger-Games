@@ -3,6 +3,7 @@ package com.goldfinch.hungergames.Game;
 import com.goldfinch.hungergames.Core.Config;
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
+import com.goldfinch.hungergames.Game.Events.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -26,7 +27,7 @@ public class Arena {
     private Location spawn;
     private GameStates state;
     private Countdown countdown;
-    private TimeController timeController;
+    private Events events;
     private Game game;
     private DeathListener deathListener;
 
@@ -37,7 +38,7 @@ public class Arena {
         spawn = Config.getArenaSpawn(id);
         state = GameStates.RECRUITING;
         countdown = new Countdown(this);
-        timeController = new TimeController(this);
+        events = new Events(this);
         game = new Game(this);
 
     }

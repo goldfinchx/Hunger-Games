@@ -31,6 +31,20 @@ arenas:
     yaw: 60.0
     pitch: 60.0
 
+events:
+  0:
+    name: "TOXIC_RAIN"
+    duration: 300
+    chance: 75
+  1:
+    name: "DARK_NIGHT"
+    duration: 600
+    chance: 35
+  2:
+    name: "ZOMBIE_HORDE"
+    duration: 420
+    chance: 50
+
 min-items-amount: 1
 max-items-amount: 3
 items:
