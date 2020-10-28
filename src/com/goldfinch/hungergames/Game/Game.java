@@ -3,15 +3,9 @@ package com.goldfinch.hungergames.Game;
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
 import com.goldfinch.hungergames.Game.Events.EventToxicRain;
-import com.goldfinch.hungergames.Game.Events.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
@@ -21,16 +15,18 @@ public class Game {
     private DeathListener deathListener;
     private HashMap<Game, Integer> time;
     private Main main;
-    private Events events;
+    private EventToxicRain eventToxicRain;
     int counter;
     int totalTime;
-    int number;
+    int gameTimerInt;
+    int toxicInt;
     int eventTimer;
     public String timeString;
 
     public Game(Arena arena) {
         this.arena = arena;
         time = new HashMap<>();
+        eventToxicRain = new EventToxicRain(this);
     }
 
     public void start() {
@@ -60,21 +56,16 @@ public class Game {
             timeString = String.format("%02d:%02d", minutes, seconds);
 
             for (Player player : Manager.getArena(arena.getID()).getPlayers()) {
-                player.sendMessage(number + "");
+                player.sendMessage(gameTimerInt + "");
                 player.getScoreboard().getTeam("timeteam").setSuffix(timeString);
             }
 
-            number++;
-            switch (number) {
+            gameTimerInt++;
+            switch (gameTimerInt) {
                 case 30:
-
-                    events.runRandomEvent(game);
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        player.sendMessage("FFFFFFFFFFF");
-                    }
-                   // events.runRefillingChests();
-
+                    activateRandomEvent();
                     break;
+
                 case 900:
 
                     break;
@@ -91,4 +82,28 @@ public class Game {
     }
 
     public void cancelGameTimer() { Bukkit.getScheduler().cancelTask(counter); }
+
+    public void activateRandomEvent() {
+        int number = main.getRandomInteger(0, 1);
+
+        switch (number) {
+            case 0:
+            case 1:
+                Bukkit.getWorld("world").setStorm(true);
+                activateToxicRain();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void activateToxicRain() {
+        eventTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getInstance(), () -> {
+            for (Player player : arena.getPlayers()) { eventToxicRain.activateEventOnPlayer(player); }
+
+            toxicInt++;
+            if (toxicInt == 100) { Bukkit.getScheduler().cancelTask(eventTimer); }
+        }, 0L, 60L);
+    }
 }

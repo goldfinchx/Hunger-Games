@@ -2,11 +2,8 @@ package com.goldfinch.hungergames.Game.Events;
 
 import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
-import com.goldfinch.hungergames.Game.Arena;
 import com.goldfinch.hungergames.Game.Game;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -18,24 +15,8 @@ import java.util.HashMap;
 public class EventToxicRain implements Listener {
 
     private Main main;
-    private Events events;
-    int eventTimer;
-    public EventToxicRain(Events events) { this.events = events; }
-
-    public void activateToxicRain(Game game) {
-        eventTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(main.getInstance(), () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                EventToxicRain.activateEventOnPlayer(player);
-                player.sendMessage(eventTimer + "");
-            }
-
-            if (eventTimer == 150 ) {
-                Bukkit.getScheduler().cancelTask(eventTimer);
-            }
-
-        }, 0L, 40L);
-    }
-
+    private Game game;
+    public EventToxicRain(Game game) { this.game = game; }
 
     public static boolean isThereRoof(Player player) {
         HashMap<Material, Integer> blocksAbove = new HashMap<>();
@@ -55,11 +36,10 @@ public class EventToxicRain implements Listener {
         return false;
     }
 
-    public static void activateEventOnPlayer(Player player) {
+    public void activateEventOnPlayer(Player player) {
         if (!isThereRoof(player)) {
-            for (Player players : Manager.getArena(player).getPlayers()) {
-                players.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5, 3, false, false));
-            }
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 40, 3, false, false));
         }
     }
 }
+

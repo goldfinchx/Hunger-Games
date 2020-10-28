@@ -12,13 +12,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
     private static Main instance;
-    public int getRandomInteger(int min, int max) {
+    public static int getRandomInteger(int min, int max) {
         max -= min;
         return (int) (Math.random() * ++max) + min;
     }
 
     @Override
     public void onEnable() {
+        Main.instance = this;
+
         new Config(this);
         new Manager();
 
@@ -30,7 +32,6 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginCommand("dnn3n32osso3x").setExecutor(new ClickablePlayAgainCommand());
         Bukkit.getPluginCommand("oo3inznejtn").setExecutor(new ClickableLeaveArenaCommand());
 
-        Main.instance = this;
     }
 
     public static Main getInstance() { return instance; }

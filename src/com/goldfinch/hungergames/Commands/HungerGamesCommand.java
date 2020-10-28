@@ -1,6 +1,7 @@
 package com.goldfinch.hungergames.Commands;
 
 import com.goldfinch.hungergames.Core.Config;
+import com.goldfinch.hungergames.Core.Main;
 import com.goldfinch.hungergames.Core.Manager;
 import com.goldfinch.hungergames.Game.Arena;
 import com.goldfinch.hungergames.Game.DeathListener;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 
 public class HungerGamesCommand implements CommandExecutor {
     private Arena arena;
+    private Main main;
     private DeathListener deathListener;
 
     @Override
