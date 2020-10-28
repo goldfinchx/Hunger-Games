@@ -1,0 +1,115 @@
+# Основные настройки
+required-players: 2
+max-players-amount: 32
+countdown-seconds: 30
+lobby:
+  world: 'world'
+  x: 514
+  y: 66
+  z: 888
+  yaw: 60.0
+  pitch: 60.0
+arenas:
+  '0':
+    world: 'world'
+    x: 518
+    y: 64
+    z: 852
+    yaw: 60.0
+    pitch: 60.0
+  '1':
+    world: 'world'
+    x: 492
+    y: 63
+    z: 876
+    yaw: 60.0
+    pitch: 60.0
+  '2':
+    world: 'world'
+    x: 527
+    y: 61
+    z: 909
+    yaw: 60.0
+    pitch: 60.0
+
+
+# Настройки эвентов
+events:
+  0:
+    name: "TOXIC_RAIN"
+    duration: 300
+    chance: 75
+  1:
+    name: "DARK_NIGHT"
+    duration: 600
+    chance: 35
+  2:
+    name: "ZOMBIE_HORDE"
+    duration: 420
+    chance: 50
+
+
+# Настройки сундуков
+min-items-amount: 1
+max-items-amount: 3
+items:
+  0:
+    material: "WATCH"
+    chance: 10
+    min: 1
+    max: 1
+  1:
+    material: "PUMPKIN"
+    chance: 60
+    min: 1
+    max: 5
+  2:
+    material: "STONE"
+    chance: 100
+    min: 5
+    max: 64
+  3:
+    material: "DIAMOND_SWORD"
+    chance: 5
+    min: 1
+    max: 1
+  4:
+    material: "IRON_SWORD"
+    chance: 30
+    min: 1
+    max: 1
+  5:
+    material: "GOLD_SWORD"
+    chance: 60
+    min: 1
+    max: 1
+  6:
+    material: "DIAMOND"
+    chance: 40
+    min: 1
+    max: 12
+  7:
+    material: "IRON_INGOT"
+    chance: 70
+    min: 1
+    max: 5
+  8:
+    material: "ARROW"
+    chance: 100
+    min: 1
+    max: 32
+  9:
+    material: "REDSTONE"
+    chance: 30
+    min: 5
+    max: 12
+  10:
+    material: "STONE_BUTTON"
+    chance: 100
+    min: 1
+    max: 54
+  11:
+    material: "BONE"
+    chance: 1
+    min: 64
+    max: 64
